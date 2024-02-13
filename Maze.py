@@ -2,14 +2,10 @@ import random, pygame, numpy as np, sys
 
 
 pygame.init()
-
-class Maze:
-    def __init__(self, w=640, h=480):
-        self.w = w
-        self.h = h
-        #init display
-        self.display = pygame.display.set_mode(self.w,self.h)
-        pygame.display.set_caption('Maze')
+class HERO:
+    self.body = np.array([self.x, self.y])
+    def __init__(self):
+        self.body = []
     
 class SPIKE:
     def __init__(self):
@@ -22,17 +18,18 @@ class SPIKE:
         spike_rect = pygame.Rect(self.pos[0]*cell_size,self.pos[1]*cell_size,cell_size,cell_size)
         pygame.draw.rect(screen, (1,1,1), spike_rect)
 
-cell_size = 60
+cell_size = 30
 cell_number = 20
 
 screen = pygame.display.set_mode((cell_number*cell_size, cell_number*cell_size))
 clock = pygame.time.Clock()
 
 spike = SPIKE()
-
-while True:
+running = True
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            running = False
             pygame.quit()
             sys.exit()
     screen.fill((75,75,75))
