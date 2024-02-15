@@ -39,17 +39,49 @@ screen = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 
 spike = SPIKE()
+# Creating the mazes and array of mazes
 maze1 = MAZE()
+maze2 = MAZE()
+maze3 = MAZE()
+maze4 = MAZE()
+maze5 = MAZE()
+maze6 = MAZE()
+maze7 = MAZE()
+maze8 = MAZE()
+maze9 = MAZE()
+mazes = np.array([[maze1.maze, maze2.maze, maze3.maze],
+                  [maze4.maze, maze5.maze, maze6.maze],
+                  [maze7.maze, maze8.maze, maze9.maze]])
 
+
+# Defining colors to be used in the rest of the game
+black = (0, 0, 0)
+blue = (0, 0, 255)
+doorColor = (255, 0, 0)
+
+
+# Creating the game step loop
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
             pygame.quit()
-  
-    screen.fill((75,75,75))
+            running = False
+
     spike.draw_spike()
-    # Point specified is the top left of the surface
+
+    # Draw the maze the player is in
+    for i in range(20):
+        for j in range(20):
+            if maze1.maze[i, j] == 1:
+                color = black
+                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+            elif maze1.maze[i, j] == 0:
+                color = blue
+                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+            elif maze1.maze[i, j] == 2:
+                color = doorColor
+                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+
     pygame.display.update()
     clock.tick(60)
