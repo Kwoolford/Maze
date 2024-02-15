@@ -18,7 +18,6 @@ class SPIKE:
         self.pos = self.x, self.y
         # Create an x and y position
         # Draw a triangle
-        
     def draw_spike(self):
         spike_rect = pygame.Rect(self.pos[0]*cell_width,self.pos[1]*cell_height,cell_width,cell_height)
         pygame.draw.rect(screen, (1,1,1), spike_rect)
