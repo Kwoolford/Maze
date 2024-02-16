@@ -217,15 +217,25 @@ def changeRoom(userChords, mazes):
         elif userChords[2] == 18 and userChords[3] == 10:
             userChords = (1, 2, 1, 10)
 
+    # For the center left grid
     elif userChords[0] == 1 and userChords[1] == 0:
+        # For taking a right
         if userChords[2] == 9 and userChords[3] == 18:
-            userChords = (1, 1, 10, 0)
+            userChords = (1, 1, 9, 1)
         elif userChords[2] == 10 and userChords[3] == 18:
-            userChords = (1, 1, 10, 0)
+            userChords = (1, 1, 10, 1)
+
+        # For going down
         elif userChords[2] == 18 and userChords[3] == 9:
-            userChords = (2, 0, 0, 9)
+            userChords = (2, 0, 1, 9)
         elif userChords[2] == 18 and userChords[3] == 10:
-            userChords = (2, 0, 0, 10)
+            userChords = (2, 0, 1, 10)
+
+        # For going up
+        elif userChords[2] == 1 and userChords[3] == 9:
+            userChords = (0, 0, 18, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (0, 0, 18, 10)
     # For the center grid
     elif userChords[0] == 1 and userChords[1] == 1:
         # For taking a right
@@ -267,38 +277,71 @@ def changeRoom(userChords, mazes):
             mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 1, 1, 10)
             mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
+    # For the center right grid
     elif userChords[0] == 1 and userChords[1] == 2:
+        # For taking a left
         if userChords[2] == 1 and userChords[3] == 9:
-            userChords = (1, 1, 19, 9)
+            userChords = (1, 1, 9, 18)
         elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (1, 1, 19, 10)
-        elif userChords[2] == 9 and userChords[3] == 1:
-            userChords = (2, 2, 9, 19)
-        elif userChords[2] == 10 and userChords[3] == 1:
-            userChords = (2, 2, 10, 19)
-    elif userChords[0] == 2 and userChords[1] == 0:
-        if userChords[2] == 1 and userChords[3] == 9:
-            userChords = (1, 2, 19, 9)
-        elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (1, 2, 19, 10)
-    elif userChords[0] == 2 and userChords[1] == 1:
-        if userChords[2] == 9 and userChords[3] == 18:
-            userChords = (2, 0, 9, 19)
-        elif userChords[2] == 10 and userChords[3] == 18:
-            userChords = (2, 0, 10, 19)
+            userChords = (1, 1, 10, 18)
+        # For going down
+        elif userChords[2] == 18 and userChords[3] == 9:
+            userChords = (2, 2, 1, 9)
+        elif userChords[2] == 18 and userChords[3] == 10:
+            userChords = (2, 2, 1, 10)
+        
+        # For going up
         elif userChords[2] == 1 and userChords[3] == 9:
-            userChords = (2, 2, 19, 9)
+            userChords = (0, 1, 18, 9)
         elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (2, 2, 19, 10)
-    elif userChords[0] == 2 and userChords[1] == 2:
-        if userChords[2] == 9 and userChords[3] == 18:
-            userChords = (2, 1, 9, 19)
+            userChords = (0, 1, 18, 10)
+    # For the bottom left grid
+    elif userChords[0] == 2 and userChords[1] == 0:
+        # For going up
+        if userChords[2] == 1 and userChords[3] == 9:
+            userChords = (1, 2, 18, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (1, 2, 18, 10)
+
+        # For taking a right
+        elif userChords[2] == 9 and userChords[3] == 18:
+            userChords = (2, 1, 9, 1)
         elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (2, 1, 10, 1)
+    # For the bottom center grid
+    elif userChords[0] == 2 and userChords[1] == 1:
+        # For taking a right
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (2, 0, 9, 18)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (2, 0, 10, 18)
+
+        # For taking a left
+        elif userChords[2] == 9 and userChords[3] == 1:
+            userChords = (2, 2, 18, 9)
+        elif userChords[2] == 10 and userChords[3] == 1:
+            userChords = (2, 2, 18, 10)
+        
+        # For going up
+        elif userChords[2] == 1 and userChords[3] == 9:
+            userChords = (1, 1, 18, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (1, 1, 18, 10)
+        
+    # For the bottom right grid
+    elif userChords[0] == 2 and userChords[1] == 2:
+        # For taking a left
+        if userChords[2] == 1 and userChords[3] == 9:
+            userChords = (2, 1, 9, 19)
+        elif userChords[2] == 1 and userChords[3] == 10:
             userChords = (2, 1, 10, 19)
+
+        
         elif userChords[2] == 1 and userChords[3] == 9:
             userChords = (2, 1, 19, 9)
         elif userChords[2] == 1 and userChords[3] == 10:
             userChords = (2, 1, 19, 10)
+
     print("I am being initiated")
     return userChords, mazes
 
