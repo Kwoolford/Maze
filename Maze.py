@@ -154,11 +154,79 @@ def createMazes():
     mazes = np.array([[maze1.maze, maze2.maze, maze3.maze],
                     [maze4.maze, maze5.maze, maze6.maze],
                     [maze7.maze, maze8.maze, maze9.maze]])
-    return mazes
-
-# Creating the array of mazes
     
+    # Creating the user in Maze 5
+    userChords = (1, 1, 10, 10)
+    return mazes, userChords
 
+# Creating the game steps
+def upStep(userChords):
+    # Begin error checking
+    if mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 1:
+        print("Cannot move through walls")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 2:
+        print("You hit a spike!\nInitiate game ending procedure")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 3:
+        print("You hit a door!\nInitiate maze change procedure")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 0:
+        mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+        mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] = 4
+        userChords = (userChords[0], userChords[1], userChords[2] - 1, userChords[3])
+        action = userChords
+    return action
+
+def downStep(userChords):
+    # Begin error checking
+    if mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 1:
+        print("Cannot move through walls")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 2:
+        print("You hit a spike!\nInitiate game ending procedure")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 3:
+        print("You hit a door!\nInitiate maze change procedure")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 0:
+        mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+        mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] = 4
+        userChords = (userChords[0], userChords[1], userChords[2] + 1, userChords[3])
+        action = userChords
+    return action
+
+def rightStep(userChords):
+    # Begin error checking
+    if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 1:
+        print("Cannot move through walls")
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 2:
+        print("You hit a spike!")
+        print("Initiate game ending procedure")
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 3:
+        print("You hit a door!")
+        print("Initiate maze change procedure")
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 0:
+        mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+        mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] = 4
+        userChords = (userChords[0], userChords[1], userChords[2], userChords[3] + 1)
+    return userChords
+
+def leftStep(userChords):
+    # Begin error checking
+    if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 1:
+        print("Cannot move through walls")
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 2:
+        print("You hit a spike!")
+        print("Initiate game ending procedure")
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 3:
+        print("You hit a door!")
+        print("Initiate maze change procedure")
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 0:
+        mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+        mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] = 4
+        userChords = (userChords[0], userChords[1], userChords[2], userChords[3] - 1)
+    return userChords
 # Defining colors to be used in the rest of the game
 black = (0, 0, 0)
 blue = (0, 0, 255)
@@ -170,10 +238,7 @@ screen = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 
 # Create Mazes and Doors
-mazes = createMazes()
-
-# Creating the user position in the maze
-userChords = (1, 1, 10, 10)
+mazes, userChords = createMazes()
 
 # Creating the game step loop
 running = True
@@ -185,21 +250,20 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
-                mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] = 4
-                userChords = (userChords[0], userChords[1], userChords[2] - 1, userChords[3])
+                # Get gamestep info
+                userChords = upStep(userChords)
+
             elif event.key == pygame.K_DOWN:
-                mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
-                mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] = 4
-                userChords = (userChords[0], userChords[1], userChords[2] + 1, userChords[3])
+                # Begin error checking
+                userChords = downStep(userChords)
+
             elif event.key == pygame.K_LEFT:
-                mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
-                mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] = 4
-                userChords = (userChords[0], userChords[1], userChords[2], userChords[3] - 1)
+                # Begin error checking
+                userChords = leftStep(userChords)
+
             elif event.key == pygame.K_RIGHT:
-                mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
-                mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
-                userChords = (userChords[0], userChords[1], userChords[2], userChords[3] + 1)
+                # Begin error checking
+                userChords = rightStep(userChords)
 
     # Draw the maze the player is in
     for i in range(20):
