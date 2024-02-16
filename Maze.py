@@ -159,8 +159,95 @@ def createMazes():
     userChords = (1, 1, 10, 10)
     return mazes, userChords
 
+# Creating the room changing logic
+def changeRoom(userChords):
+    if userChords[0] == 0 and userChords[1] == 0:
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (0, 1, 9, 0)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (0, 1, 10, 0)
+        elif userChords[2] == 18 and userChords[3] == 9:
+            userChords = (1, 0, 0, 9)
+        elif userChords[2] == 18 and userChords[3] == 10:
+            userChords = (1, 0, 0, 10)
+    elif userChords[0] == 0 and userChords[1] == 1:
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (0, 2, 9, 0)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (0, 2, 10, 0)
+        elif userChords[2] == 1 and userChords[3] == 9:
+            userChords = (0, 0, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (0, 0, 19, 10)
+        elif userChords[2] == 9 and userChords[3] == 1:
+            userChords = (1, 1, 9, 19)
+        elif userChords[2] == 10 and userChords[3] == 1:
+            userChords = (1, 1, 10, 19)
+    elif userChords[0] == 0 and userChords[1] == 2:
+        if userChords[2] == 1 and userChords[3] == 9:
+            userChords = (0, 1, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (0, 1, 19, 10)
+    elif userChords[0] == 1 and userChords[1] == 0:
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (1, 1, 10, 0)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (1, 1, 10, 0)
+        elif userChords[2] == 18 and userChords[3] == 9:
+            userChords = (2, 0, 0, 9)
+        elif userChords[2] == 18 and userChords[3] == 10:
+            userChords = (2, 0, 0, 10)
+    elif userChords[0] == 1 and userChords[1] == 1:
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (1, 2, 9, 0)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (1, 2, 10, 0)
+        elif userChords[2] == 1 and userChords[3] == 9:
+            userChords = (1, 0, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (1, 0, 19, 10)
+        elif userChords[2] == 9 and userChords[3] == 1:
+            userChords = (2, 1, 9, 19)
+        elif userChords[2] == 10 and userChords[3] == 1:
+            userChords = (2, 1, 10, 19)
+    elif userChords[0] == 1 and userChords[1] == 2:
+        if userChords[2] == 1 and userChords[3] == 9:
+            userChords = (1, 1, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (1, 1, 19, 10)
+        elif userChords[2] == 9 and userChords[3] == 1:
+            userChords = (2, 2, 9, 19)
+        elif userChords[2] == 10 and userChords[3] == 1:
+            userChords = (2, 2, 10, 19)
+    elif userChords[0] == 2 and userChords[1] == 0:
+        if userChords[2] == 1 and userChords[3] == 9:
+            userChords = (1, 2, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (1, 2, 19, 10)
+    elif userChords[0] == 2 and userChords[1] == 1:
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (2, 0, 9, 19)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (2, 0, 10, 19)
+        elif userChords[2] == 1 and userChords[3] == 9:
+            userChords = (2, 2, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (2, 2, 19, 10)
+    elif userChords[0] == 2 and userChords[1] == 2:
+        if userChords[2] == 9 and userChords[3] == 18:
+            userChords = (2, 1, 9, 19)
+        elif userChords[2] == 10 and userChords[3] == 18:
+            userChords = (2, 1, 10, 19)
+        elif userChords[2] == 1 and userChords[3] == 9:
+            userChords = (2, 1, 19, 9)
+        elif userChords[2] == 1 and userChords[3] == 10:
+            userChords = (2, 1, 19, 10)
+    print("I am being initiated")
+    return userChords
+
 # Creating the game steps
 def upStep(userChords):
+    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 1:
         print("Cannot move through walls")
@@ -171,6 +258,7 @@ def upStep(userChords):
     elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 3:
         print("You hit a door!\nInitiate maze change procedure")
         action = userChords
+        doorChange = True
     elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] = 4
@@ -179,6 +267,7 @@ def upStep(userChords):
     return action
 
 def downStep(userChords):
+    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 1:
         print("Cannot move through walls")
@@ -188,6 +277,7 @@ def downStep(userChords):
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 3:
         print("You hit a door!\nInitiate maze change procedure")
+        doorChange = True
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
@@ -197,6 +287,7 @@ def downStep(userChords):
     return action
 
 def rightStep(userChords):
+    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 1:
         print("Cannot move through walls")
@@ -204,8 +295,8 @@ def rightStep(userChords):
         print("You hit a spike!")
         print("Initiate game ending procedure")
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 3:
-        print("You hit a door!")
-        print("Initiate maze change procedure")
+        print("You hit a door!\nInitiate maze change procedure")
+        doorChange = True
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] = 4
@@ -213,6 +304,7 @@ def rightStep(userChords):
     return userChords
 
 def leftStep(userChords):
+    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 1:
         print("Cannot move through walls")
@@ -222,11 +314,14 @@ def leftStep(userChords):
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 3:
         print("You hit a door!")
         print("Initiate maze change procedure")
+        doorChange = True
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] = 4
         userChords = (userChords[0], userChords[1], userChords[2], userChords[3] - 1)
     return userChords
+
+
 # Defining colors to be used in the rest of the game
 black = (0, 0, 0)
 blue = (0, 0, 255)
@@ -242,6 +337,7 @@ mazes, userChords = createMazes()
 
 # Creating the game step loop
 running = True
+doorChange = False
 while running:
     # Check for events
     for event in pygame.event.get():
@@ -252,18 +348,30 @@ while running:
             if event.key == pygame.K_UP:
                 # Get gamestep info
                 userChords = upStep(userChords)
+                if doorChange == True:
+                    userChords = changeRoom(userChords)
+                    doorChange = False
 
             elif event.key == pygame.K_DOWN:
                 # Begin error checking
                 userChords = downStep(userChords)
+                if doorChange == True:
+                    userChords = changeRoom(userChords)
+                    doorChange = False
 
             elif event.key == pygame.K_LEFT:
                 # Begin error checking
                 userChords = leftStep(userChords)
+                if doorChange == True:
+                    userChords = changeRoom(userChords)
+                    doorChange = False
 
             elif event.key == pygame.K_RIGHT:
                 # Begin error checking
                 userChords = rightStep(userChords)
+                if doorChange == True:
+                    userChords = changeRoom(userChords)
+                    doorChange = False
 
     # Draw the maze the player is in
     for i in range(20):
