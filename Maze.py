@@ -10,6 +10,23 @@ width, height = 1000, 1000
 cell_width = width // maze_width
 cell_height = height // maze_height
 
+# Importing Images
+# Importing the hero image
+hero_image = pygame.image.load('hero.jpg')
+hero_image = pygame.transform.scale(hero_image, (cell_width, cell_height))
+# Importing the door image
+door_image = pygame.image.load('door.jpg')
+door_image = pygame.transform.scale(door_image, (cell_width, cell_height))
+# Importing the spike image
+spike_image = pygame.image.load('spike.jpg')
+spike_image = pygame.transform.scale(spike_image, (cell_width, cell_height))
+# Importing the wall image
+wall_image = pygame.image.load('wall.jpg')
+wall_image = pygame.transform.scale(wall_image, (cell_width, cell_height))
+# Importing the floor image
+floor_image = pygame.image.load('floor.jpg')
+floor_image = pygame.transform.scale(floor_image, (cell_width, cell_height))
+
 # Initialize Pygame
 pygame.init()    
 
@@ -43,50 +60,50 @@ class Spike:
             self.add_spike()
 
 # Creating the mazes and and randomly generating spikes in mazes
-def createMazes():
+def createMazes(difficulty):
     maze1 = MAZE()
     spike1 = Spike(maze1.maze)
-    spike1.add_spikes(5)
+    spike1.add_spikes(difficulty)
     print(maze1.maze)
 
     maze2 = MAZE()
     spike2 = Spike(maze2.maze)
-    spike2.add_spikes(5)
+    spike2.add_spikes(difficulty)
     print(maze2.maze)
 
     maze3 = MAZE()
     spike3 = Spike(maze3.maze)
-    spike3.add_spikes(5)
+    spike3.add_spikes(difficulty)
     print(maze3.maze)
 
     maze4 = MAZE()
     spike4 = Spike(maze4.maze)
-    spike4.add_spikes(5)
+    spike4.add_spikes(difficulty)
     print(maze4.maze)
 
     maze5 = MAZE()
     spike5 = Spike(maze5.maze)
-    spike5.add_spikes(5)
+    spike5.add_spikes(difficulty)
     print(maze5.maze)
 
     maze6 = MAZE()
     spike6 = Spike(maze6.maze)
-    spike6.add_spikes(5)
+    spike6.add_spikes(difficulty)
     print(maze6.maze)
 
     maze7 = MAZE()
     spike7 = Spike(maze7.maze)
-    spike7.add_spikes(5)
+    spike7.add_spikes(difficulty)
     print(maze7.maze)
 
     maze8 = MAZE()
     spike8 = Spike(maze8.maze)
-    spike8.add_spikes(5)
+    spike8.add_spikes(difficulty)
     print(maze8.maze)
 
     maze9 = MAZE()
     spike9 = Spike(maze9.maze)
-    spike9.add_spikes(5)
+    spike9.add_spikes(difficulty)
     print(maze9.maze)
 
     # Adding Doors to mazes in logical 3x3 format
@@ -491,8 +508,77 @@ spikeColor = (50, 50, 50)
 screen = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 
+
+# Creating game loop function to get the difficulty from the user
+def createTextBox():
+    font = pygame.font.Font(None, 36)
+    input_box = pygame.Rect(50, 900, 900, 50)
+    color_inactive = pygame.Color('lightskyblue3')
+    color_active = pygame.Color('dodgerblue2')
+    color = color_inactive
+    active = False
+    text = ''
+    done = False
+
+    # Game loop for text input
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_box.collidepoint(event.pos):
+                    active = not active
+                else:
+                    active = False
+                color = color_active if active else color_inactive
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_RETURN:
+                        if text.lower() == 'easy':
+                            difficulty = 'easy'
+                            done = True
+                        elif text.lower() == 'medium':
+                            difficulty = 'medium'
+                            done = True
+                        elif text.lower() == 'hard':
+                            difficulty = 'hard'
+                            done = True
+                        else:
+                            text = ''
+                    elif event.key == pygame.K_BACKSPACE:
+                        text = text[:-1]
+                    else:
+                        text += event.unicode
+
+        screen.fill((30, 30, 30))
+        txt_surface = font.render(text, True, color)
+        width = max(200, txt_surface.get_width() + 10)
+        input_box.w = width
+        screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        pygame.draw.rect(screen, color, input_box, 2)
+
+        # Display the difficulties above the text box
+        difficulty_text = font.render("Enter a difficulty : easy, medium, hard", True, (255, 255, 255))
+        screen.blit(difficulty_text, (input_box.x, input_box.y - 50))
+
+        pygame.display.flip()
+        clock.tick(30)
+
+    return difficulty
+
+# Assigning Spike quantities to difficulties
+difficulty = createTextBox()
+if difficulty == 'easy':
+    difficulty = 0
+elif difficulty == 'medium':
+    difficulty = 8
+elif difficulty == 'hard':
+    difficulty = 16
+
+
 # Create Mazes and Doors
-mazes, userChords = createMazes()
+mazes, userChords = createMazes(difficulty)
 
 # Creating the game step loop
 running = True
@@ -539,20 +625,15 @@ while running:
     for i in range(20):
         for j in range(20):
             if mazes[userChords[0], userChords[1]][i, j] == 1:
-                color = black
-                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+                screen.blit(wall_image, (j * cell_width, i * cell_height))
             elif mazes[userChords[0], userChords[1]][i, j] == 0:
-                color = blue
-                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+                screen.blit(floor_image, (j * cell_width, i * cell_height))
             elif mazes[userChords[0], userChords[1]][i, j] == 2:
-                color = spikeColor
-                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+                screen.blit(spike_image, (j * cell_width, i * cell_height))
             elif mazes[userChords[0], userChords[1]][i, j] == 3:
-                color = doorColor
-                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+                screen.blit(door_image, (j * cell_width, i * cell_height))
             elif mazes[userChords[0], userChords[1]][i, j] == 4:
-                color = (0, 255, 0)
-                pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
+                screen.blit(hero_image, (j * cell_width, i * cell_height))
 
     pygame.display.update()
     clock.tick(10)
