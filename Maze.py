@@ -1,4 +1,5 @@
 import random, pygame, numpy as np
+import random
 
 # Maze Dimensions
 maze_width, maze_height = 20,20
@@ -26,6 +27,14 @@ wall_image = pygame.transform.scale(wall_image, (cell_width, cell_height))
 # Importing the floor image
 floor_image = pygame.image.load('floor.jpg')
 floor_image = pygame.transform.scale(floor_image, (cell_width, cell_height))
+# Importing the button image
+red_button_image = pygame.image.load('redButton.jpg')
+red_button_image = pygame.transform.scale(red_button_image, (cell_width, cell_height))
+# Importing the lava image
+lava_image = pygame.image.load('lava.jpg')
+lava_image = pygame.transform.scale(lava_image, (cell_width, cell_height))
+
+
 
 # Initialize Pygame
 pygame.init()    
@@ -142,6 +151,7 @@ def createMazes(difficulty):
 
     # Creating the user in Maze 5
     maze5.maze[10, 10] = 4
+    maze5.maze[2, 17] = 10
 
     maze6.maze[0, 9] = 3
     maze6.maze[0, 10] = 3
@@ -443,6 +453,9 @@ def upStep(userChords):
     elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 2:
         print("You hit a spike!\nInitiate game ending procedure")
         action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 5:
+        print("You hit lava!\nInitiate game ending procedure")
+        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] = 4
@@ -458,6 +471,9 @@ def downStep(userChords):
     elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 2:
         print("You hit a spike!\nInitiate game ending procedure")
         action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 5:
+        print("You hit lava!\nInitiate game ending procedure")
+        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] = 4
@@ -471,8 +487,10 @@ def rightStep(userChords):
         print("Cannot move through walls")
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 2:
-        print("You hit a spike!")
-        print("Initiate game ending procedure")
+        print("You hit a spike!\nInitiate game ending procedure")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 5:
+        print("You hit lava!\nInitiate game ending procedure")
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
@@ -487,8 +505,10 @@ def leftStep(userChords):
         print("Cannot move through walls")
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 2:
-        print("You hit a spike!")
-        print("Initiate game ending procedure")
+        print("You hit a spike!\nInitiate game ending procedure")
+        action = userChords
+    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 5:
+        print("You hit lava!\nInitiate game ending procedure")
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
@@ -497,24 +517,12 @@ def leftStep(userChords):
         action = userChords
     return action
 
-
-# Defining colors to be used in the rest of the game
-black = (0, 0, 0)
-blue = (0, 0, 255)
-doorColor = (255, 0, 0)
-spikeColor = (50, 50, 50)
-
-# Defining Screen Paremeters
-screen = pygame.display.set_mode((width, height))
-clock = pygame.time.Clock()
-
-
 # Creating game loop function to get the difficulty from the user
-def createTextBox():
+def difficultyLoop():
     font = pygame.font.Font(None, 36)
-    input_box = pygame.Rect(50, 900, 900, 50)
-    color_inactive = pygame.Color('lightskyblue3')
-    color_active = pygame.Color('dodgerblue2')
+    input_box = pygame.Rect(cell_width*5, cell_height*10, 900, 50)
+    color_inactive = pygame.Color('white')
+    color_active = pygame.Color('blue')
     color = color_inactive
     active = False
     text = ''
@@ -559,7 +567,7 @@ def createTextBox():
         pygame.draw.rect(screen, color, input_box, 2)
 
         # Display the difficulties above the text box
-        difficulty_text = font.render("Enter a difficulty : easy, medium, hard", True, (255, 255, 255))
+        difficulty_text = font.render("Enter a difficulty: easy, medium, hard (Click Box)", True, (255, 255, 255))
         screen.blit(difficulty_text, (input_box.x, input_box.y - 50))
 
         pygame.display.flip()
@@ -567,8 +575,80 @@ def createTextBox():
 
     return difficulty
 
+def drop_lava(mazes):
+    for a in range(3):
+        for b in range(3):
+            for i in range(16):
+                for j in range(16):
+                    if random.random() < 0.2:
+                        # Only execute if the current block is open 
+                        if mazes[a, b][i+2, j+2] == 0:
+                            mazes[a, b][i+2, j+2] = 5
+    return mazes
+
+def lavaLoop():
+    font = pygame.font.Font(None, 36)
+    input_box = pygame.Rect(cell_width*5, cell_height*10, 900, 50)
+    color_inactive = pygame.Color('white')
+    color_active = pygame.Color('blue')
+    color = color_inactive
+    active = False
+    text = ''
+    done = False
+
+    # Game loop for text input
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_box.collidepoint(event.pos):
+                    active = not active
+                else:
+                    active = False
+                color = color_active if active else color_inactive
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_RETURN:
+                        if text.lower() == 'yes':
+                            lava_input = 'yes'
+                            done = True
+                        elif text.lower() == 'no':
+                            lava_input = 'no'
+                            done = True
+                        else:
+                            text = ''
+                    elif event.key == pygame.K_BACKSPACE:
+                        text = text[:-1]
+                    else:
+                        text += event.unicode
+
+        screen.fill((30, 30, 30))
+        txt_surface = font.render(text, True, color)
+        width = max(200, txt_surface.get_width() + 10)
+        input_box.w = width
+        screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        pygame.draw.rect(screen, color, input_box, 2)
+
+        # Display the difficulties above the text box
+        difficulty_text = font.render("Do you like lava? Yes or no? (Click Box)", True, (255, 255, 255))
+        screen.blit(difficulty_text, (input_box.x, input_box.y - 50))
+
+        pygame.display.flip()
+        clock.tick(30)
+
+    return lava_input
+
+
+# Defining Screen Paremeters
+screen = pygame.display.set_mode((width, height))
+clock = pygame.time.Clock()
+
+
+
 # Assigning Spike quantities to difficulties
-difficulty = createTextBox()
+difficulty = difficultyLoop()
 if difficulty == 'easy':
     difficulty = 0
 elif difficulty == 'medium':
@@ -595,6 +675,10 @@ while running:
                 # Begin error checking
                 if mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 3:
                     userChords = changeRoom(userChords)
+                elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 10:
+                    lava_result = lavaLoop()
+                    if lava_result == 'yes':
+                        drop_lava(mazes)
                 else:
                     userChords = upStep(userChords)
 
@@ -603,6 +687,10 @@ while running:
                 # Begin error checking
                 if mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 3:
                     userChords = changeRoom(userChords)
+                elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 10:
+                    lava_result = lavaLoop()
+                    if lava_result == 'yes':
+                        drop_lava(mazes)
                 else:
                     userChords = downStep(userChords)
 
@@ -610,6 +698,10 @@ while running:
                 # Begin error checking
                 if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 3:
                     userChords = changeRoom(userChords)
+                elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 10:
+                    lava_result = lavaLoop()
+                    if lava_result == 'yes':
+                        drop_lava(mazes)
                 else:
                     userChords = leftStep(userChords)
 
@@ -617,6 +709,10 @@ while running:
                 # Begin error checking
                 if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 3:
                     userChords = changeRoom(userChords)
+                elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 10:
+                    lava_result = lavaLoop()
+                    if lava_result == 'yes':
+                        drop_lava(mazes)
                 else:
                     userChords = rightStep(userChords)
     print(userChords[0], userChords[1], userChords[2], userChords[3])
@@ -634,6 +730,10 @@ while running:
                 screen.blit(door_image, (j * cell_width, i * cell_height))
             elif mazes[userChords[0], userChords[1]][i, j] == 4:
                 screen.blit(hero_image, (j * cell_width, i * cell_height))
+            elif mazes[userChords[0], userChords[1]][i, j] == 5:
+                screen.blit(lava_image, (j * cell_width, i * cell_height))
+            elif mazes[userChords[0], userChords[1]][i, j] == 10:
+                screen.blit(red_button_image, (j * cell_width, i * cell_height))
 
     pygame.display.update()
     clock.tick(10)
