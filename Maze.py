@@ -160,7 +160,7 @@ def createMazes():
     return mazes, userChords
 
 # Creating the room changing logic
-def changeRoom(userChords, mazes):
+def changeRoom(userChords):
     # For the top left grid
     if userChords[0] == 0 and userChords[1] == 0:
         # For taking a right
@@ -170,7 +170,7 @@ def changeRoom(userChords, mazes):
             mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 10 and userChords[3] == 18:
             mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
-            userChords = (0, 1, 10, 0)
+            userChords = (0, 1, 10, 1)
             mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
         # For going down
@@ -187,55 +187,87 @@ def changeRoom(userChords, mazes):
     elif userChords[0] == 0 and userChords[1] == 1:
         # For taking a right
         if userChords[2] == 9 and userChords[3] == 18:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (0, 2, 9, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 10 and userChords[3] == 18:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (0, 2, 10, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         
         # For taking a left
         elif userChords[2] == 9 and userChords[3] == 1:
-            userChords = (0, 0, 18, 9)
-        elif userChords[2] == 1 and userChords[3] == 1:
-            userChords = (0, 0, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (0, 0, 9, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
+        elif userChords[2] == 10 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (0, 0, 10, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         
         # For going down
         elif userChords[2] == 18 and userChords[3] == 9:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 1, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 18 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 1, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
     # For the top right grid
     elif userChords[0] == 0 and userChords[1] == 2:
         # For taking a left
-        if userChords[2] == 1 and userChords[3] == 9:
-            userChords = (0, 1, 18, 9)
-        elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (0, 1, 18, 10)
+        if userChords[2] == 9 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (0, 1, 9, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
+        elif userChords[2] == 10 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (0, 1, 10, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         
         # For going down
         elif userChords[2] == 18 and userChords[3] == 9:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 2, 1, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 18 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 2, 1, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
     # For the center left grid
     elif userChords[0] == 1 and userChords[1] == 0:
         # For taking a right
         if userChords[2] == 9 and userChords[3] == 18:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 9, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 10 and userChords[3] == 18:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 10, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
         # For going down
         elif userChords[2] == 18 and userChords[3] == 9:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 0, 1, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 18 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 0, 1, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
         # For going up
         elif userChords[2] == 1 and userChords[3] == 9:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (0, 0, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 1 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (0, 0, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
     # For the center grid
     elif userChords[0] == 1 and userChords[1] == 1:
         # For taking a right
@@ -280,74 +312,113 @@ def changeRoom(userChords, mazes):
     # For the center right grid
     elif userChords[0] == 1 and userChords[1] == 2:
         # For taking a left
-        if userChords[2] == 1 and userChords[3] == 9:
+        if userChords[2] == 9 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 9, 18)
-        elif userChords[2] == 1 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
+        elif userChords[2] == 10 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 10, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         # For going down
         elif userChords[2] == 18 and userChords[3] == 9:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 2, 1, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 18 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 2, 1, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         
         # For going up
         elif userChords[2] == 1 and userChords[3] == 9:
-            userChords = (0, 1, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (0, 2, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (0, 1, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (0, 2, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
     # For the bottom left grid
     elif userChords[0] == 2 and userChords[1] == 0:
         # For going up
         if userChords[2] == 1 and userChords[3] == 9:
-            userChords = (1, 2, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (1, 0, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (1, 2, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (1, 0, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
         # For taking a right
         elif userChords[2] == 9 and userChords[3] == 18:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 1, 9, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 10 and userChords[3] == 18:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (2, 1, 10, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
     # For the bottom center grid
     elif userChords[0] == 2 and userChords[1] == 1:
         # For taking a right
         if userChords[2] == 9 and userChords[3] == 18:
-            userChords = (2, 0, 9, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (2, 2, 9, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 10 and userChords[3] == 18:
-            userChords = (2, 0, 10, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (2, 2, 10, 1)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
         # For taking a left
         elif userChords[2] == 9 and userChords[3] == 1:
-            userChords = (2, 2, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (2, 0, 9, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 10 and userChords[3] == 1:
-            userChords = (2, 2, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (2, 0, 10, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         
         # For going up
         elif userChords[2] == 1 and userChords[3] == 9:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 1 and userChords[3] == 10:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
             userChords = (1, 1, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         
     # For the bottom right grid
     elif userChords[0] == 2 and userChords[1] == 2:
         # For taking a left
-        if userChords[2] == 1 and userChords[3] == 9:
-            userChords = (2, 1, 9, 19)
-        elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (2, 1, 10, 19)
+        if userChords[2] == 9 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (2, 1, 9, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
+        elif userChords[2] == 10 and userChords[3] == 1:
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (2, 1, 10, 18)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
-        
+        # For going up
         elif userChords[2] == 1 and userChords[3] == 9:
-            userChords = (2, 1, 19, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (1, 2, 18, 9)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
         elif userChords[2] == 1 and userChords[3] == 10:
-            userChords = (2, 1, 19, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
+            userChords = (1, 2, 18, 10)
+            mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 4
 
     print("I am being initiated")
-    return userChords, mazes
+    return userChords
 
 # Creating the game steps
-def upStep(userChords, mazes):
-    doorChange = False
+def upStep(userChords):
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 1:
         print("Cannot move through walls")
@@ -355,28 +426,20 @@ def upStep(userChords, mazes):
     elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 2:
         print("You hit a spike!\nInitiate game ending procedure")
         action = userChords
-    elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 3:
-        print("You hit a door!\nInitiate maze change procedure")
-        userChords, mazes = changeRoom(userChords, mazes)
-        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] = 4
         userChords = (userChords[0], userChords[1], userChords[2] - 1, userChords[3])
         action = userChords
-    return action, mazes
+    return action
 
 def downStep(userChords):
-    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 1:
         print("Cannot move through walls")
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 2:
         print("You hit a spike!\nInitiate game ending procedure")
-        action = userChords
-    elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 3:
-        print("You hit a door!\nInitiate maze change procedure")
         action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
@@ -386,39 +449,36 @@ def downStep(userChords):
     return action
 
 def rightStep(userChords):
-    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 1:
         print("Cannot move through walls")
+        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 2:
         print("You hit a spike!")
         print("Initiate game ending procedure")
-    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 3:
-        print("You hit a door!\nInitiate maze change procedure")
-
+        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] = 4
         userChords = (userChords[0], userChords[1], userChords[2], userChords[3] + 1)
-    return userChords
+        action = userChords
+    return action
 
 def leftStep(userChords):
-    doorChange = False
     # Begin error checking
     if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 1:
         print("Cannot move through walls")
+        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 2:
         print("You hit a spike!")
         print("Initiate game ending procedure")
-    elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 3:
-        print("You hit a door!")
-        print("Initiate maze change procedure")
-        doorChange = True
+        action = userChords
     elif mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 0:
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3]] = 0
         mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] = 4
         userChords = (userChords[0], userChords[1], userChords[2], userChords[3] - 1)
-    return userChords
+        action = userChords
+    return action
 
 
 # Defining colors to be used in the rest of the game
@@ -446,20 +506,33 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 # Get gamestep info
-                userChords, mazes = upStep(userChords, mazes)
-                print(userChords)
+                # Begin error checking
+                if mazes[userChords[0], userChords[1]][userChords[2] - 1, userChords[3]] == 3:
+                    userChords = changeRoom(userChords)
+                else:
+                    userChords = upStep(userChords)
+
 
             elif event.key == pygame.K_DOWN:
                 # Begin error checking
-                userChords = downStep(userChords)
+                if mazes[userChords[0], userChords[1]][userChords[2] + 1, userChords[3]] == 3:
+                    userChords = changeRoom(userChords)
+                else:
+                    userChords = downStep(userChords)
 
             elif event.key == pygame.K_LEFT:
                 # Begin error checking
-                userChords = leftStep(userChords)
+                if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] - 1] == 3:
+                    userChords = changeRoom(userChords)
+                else:
+                    userChords = leftStep(userChords)
 
             elif event.key == pygame.K_RIGHT:
                 # Begin error checking
-                userChords = rightStep(userChords)
+                if mazes[userChords[0], userChords[1]][userChords[2], userChords[3] + 1] == 3:
+                    userChords = changeRoom(userChords)
+                else:
+                    userChords = rightStep(userChords)
     print(userChords[0], userChords[1], userChords[2], userChords[3])
 
     # Draw the maze the player is in
@@ -482,4 +555,4 @@ while running:
                 pygame.draw.rect(screen, color, (j * cell_width, i * cell_height, cell_width, cell_height))
 
     pygame.display.update()
-    clock.tick(3)
+    clock.tick(10)
